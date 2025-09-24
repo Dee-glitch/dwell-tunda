@@ -1,0 +1,177 @@
+<div class="vendor-thank-you-page">
+  <div class="container">
+    <div class="checkmark-container">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+      </svg>
+    </div>
+
+    <div class="section-header text-center">
+      <h1>Thank You for Signing Up!</h1>
+      <p>Your registration is complete. Please check your email for your login details so you can start selling on AfroTunda.</p>
+    </div>
+
+    <div class="thank-you-content">
+      <p>We’re excited to have you on board. While you wait for your login credentials, feel free to explore our vendor resources and guidelines.</p>
+      <a href="/" class="btn-home">Back to AfroTunda</a>
+    </div>
+  </div>
+  <canvas id="confetti-canvas"></canvas>
+</div>
+
+<style>
+  .vendor-thank-you-page {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff7f5;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vendor-thank-you-page .container {
+    max-width: 700px;
+    margin: auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(14, 1, 1, 0.08);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .checkmark-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    stroke-width: 4;
+    stroke: #3e0404;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #3e0404;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+  }
+
+  .checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+    stroke: #3e0404;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  }
+
+  .checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+  }
+
+  @keyframes stroke {
+    100% { stroke-dashoffset: 0; }
+  }
+
+  @keyframes scale {
+    0%, 100% { transform: none; }
+    50% { transform: scale3d(1.1, 1.1, 1); }
+  }
+
+  @keyframes fill {
+    100% { box-shadow: inset 0px 0px 0px 50px #ffffff; }
+  }
+
+  #confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-header h1 {
+    font-size: 2.5rem;
+    color: #3e0404;
+    margin-bottom: 20px;
+  }
+
+  .section-header p {
+    font-size: 1.1rem;
+    color: #3e0404;
+    margin-bottom: 40px;
+  }
+
+  .thank-you-content p {
+    font-size: 1rem;
+    color: #3e0404;
+    margin-bottom: 30px;
+  }
+
+  .btn-home {
+    display: inline-block;
+    background-color: #3e0404;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-home:hover {
+    background-color: #5a0606;
+  }
+</style>
+
+<script>
+  // Simple confetti animation
+  const canvas = document.getElementById("confetti-canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const confettiPieces = Array.from({ length: 100 }).map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height - canvas.height,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 10 + 10,
+    color: `hsl(${Math.random() * 360}, 70%, 60%)`,
+    tilt: Math.random() * 10 - 10
+  }));
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiPieces.forEach(p => {
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.r, p.r);
+    });
+    updateConfetti();
+  }
+
+  function updateConfetti() {
+    confettiPieces.forEach(p => {
+      p.y += p.d / 20;
+      if (p.y > canvas.height) {
+        p.y = -10;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+  }
+
+  function animate() {
+    drawConfetti();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
