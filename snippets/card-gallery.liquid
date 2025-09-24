@@ -220,11 +220,6 @@
       >
         <span class="title-text">{{- product.title -}}</span>
       </a>
-      {% if product.vendor %}
-        <div class="product-vendor">
-          {{ product.vendor | link_to_vendor }}
-        </div>
-      {% endif %}
     </product-title>
   {% elsif product == blank %}
     {% capture placeholder_image %}
